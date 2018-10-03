@@ -1,18 +1,19 @@
 #!/env/python
+# -*- coding: UTF-8 -*-
 
-##¿¿¿¿Lane¿index(6¿)¿¿¿¿
+##ä¸¤ä¸¤æ¯”è¾ƒLaneä¸­indexå¹¶å¾—åˆ°index(6ä½)åºåˆ—å·®å¼‚
 
 import itertools
 import sys
 
-##¿¿¿¿¿¿¿¿¿¿¿
+##è®¡ç®—ä¸¤ä¸ªå­—ç¬¦ä¸²æ±‰æ˜è·ç¦»
 def hanmingDistance(s1,s2):
     if len(s1) != len(s2):
         raise ValueError("Undefined for sequences of unequal length")
     return (sum(x1 != x2 for x1,x2 in zip(s1,s2)))
 #print(hanmingDistance("ATCACG","CGATGT"))
 
-##¿¿¿¿index¿¿¿¿¿¿¿¿
+##æ’åˆ—ç»„åˆindexåˆ—è¡¨ä¸­æ‰€æœ‰çš„å¯èƒ½
 #sys.path.insert(0,r"C:\User\Desktop")
 #idx_tuple = (0,)
 idx_lst = []

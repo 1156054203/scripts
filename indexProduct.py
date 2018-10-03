@@ -1,4 +1,6 @@
 #!/env/python
+# -*- coding: UTF-8 -*-
+
 #输入index文件,输出与其相距为n的全部序列
 from itertools import product
 import sys
