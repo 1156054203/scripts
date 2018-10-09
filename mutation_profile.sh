@@ -32,6 +32,7 @@ for var in `find $prefix/${pro}/filter/CHG* -maxdepth 1 -name "*.bed"`;do
     sed -i -r 's/([ATGC].)/&\t/;s/([ATGC])/&\t/' ${var%.*}.seq
     #name=`echo $var|awk -F '/' '{print$NF}'|cut -d. -f1`
    grep '^chr' ${var%.*}_anno.filter.vcf|awk 'BEGIN{print"alt"}{if(length($5)==1)print$5}'|paste -d'\t' ${var%.*}.seq -|awk 'BEGIN{OFS="\t"}{print$2,$4,$1,$3}' >${var%.*}.info
+    sed -i '/N/d' ${var%.*}.info
     rm ${var%.*}.seq
     rm ${var%.*}.bed
 done
@@ -54,7 +55,7 @@ for var in `find $prefix/${pro}/filter/CHG* -maxdepth 1 -name "*.info"`;do
 done
 
 for var in `find $prefix/${pro}/filter/CHG* -maxdepth 1 -name "*.xls"`;do
-    sample=`echo $var|awk -F/ '{print$NF}'|cut -d. -f1`
+    sample=`echo $var|awk -F/ '{print$NF}'|cut -c1-9`
     
     cat /online/home/chenyl/temp/mode.xls|sed -n '2,$p'|while read line;do 
          context=`echo $line|awk '{OFS="\t"}{print$2,$3,$4,$5,$6,"'${sample}'"}'`
