@@ -29,19 +29,35 @@ def merge(filePath,keyword):
     end=20
     tmp=[]
     index=1
-    while end < len(filelist):
-        tmp=filelist[start:end]
-        f_write=open(filePath+'/'+'group'+str(index)+'.stat.xls','w')
-        head=open(filePath+'/'+tmp[0],'r').readlines()[0].split('\t')
-        head=head[0]+'\t'+head[3]+'\t'+head[4]+'\t'+head[5]
-        f_write.write(head)
-        for file in tmp:
-            f_read=open(filePath+'/'+file,'r')
-            context=f_read.readlines()[1:]
-            for i in context:
-                i=i.split('\t')
-                i=i[0]+'\t'+i[3]+'\t'+i[4]+'\t'+i[5]
-                f_write.write(i)
+    tag=1
+    while tag:
+        if end < len(filelist):
+            tmp=filelist[start:end]
+            f_write=open(filePath+'/'+'group'+str(index)+'.stat.xls','w')
+            head=open(filePath+'/'+tmp[0],'r').readlines()[0].split('\t')
+            head=head[0]+'\t'+head[3]+'\t'+head[4]+'\t'+head[5]
+            f_write.write(head)
+            for file in tmp:
+                f_read=open(filePath+'/'+file,'r')
+                context=f_read.readlines()[1:]
+                for i in context:
+                    i=i.split('\t')
+                    i=i[0]+'\t'+i[3]+'\t'+i[4]+'\t'+i[5]
+                    f_write.write(i)
+        else:
+            tmp=filelist[start:len(filelist)]
+            f_write=open(filePath+'/'+'group'+str(index)+'.stat.xls','w')
+            head=open(filePath+'/'+tmp[0],'r').readlines()[0].split('\t')
+            head=head[0]+'\t'+head[3]+'\t'+head[4]+'\t'+head[5]
+            f_write.write(head)
+            for file in tmp:
+                f_read=open(filePath+'/'+file,'r')
+                context=f_read.readlines()[1:]
+                for i in context:
+                    i=i.split('\t')
+                    i=i[0]+'\t'+i[3]+'\t'+i[4]+'\t'+i[5]
+                    f_write.write(i)
+            tag=0
         f_write.close()
         f_read.close()
         start+=20
