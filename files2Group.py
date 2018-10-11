@@ -19,10 +19,10 @@ def merge(filePath,keyword):
            filelist.extend(os.listdir(filePath))
         else:
             print("The dir is empty") 
-            sys.exit(1)
+            sys.exit()
     else:
         print('The dir is not exist')
-        sys.exit(1)
+        sys.exit()
    
     filelist=[x for x in filelist if keyword in x]
     start=0
@@ -57,7 +57,7 @@ def merge(filePath,keyword):
                     i=i.split('\t')
                     i=i[0]+'\t'+i[3]+'\t'+i[4]+'\t'+i[5]
                     f_write.write(i)
-            tag=0
+            tag=0       
         f_write.close()
         f_read.close()
         start+=20
@@ -69,8 +69,6 @@ def main():
         path=args.path
         key= args.key
         merge(path,key)
-    else:
-        sys.exit(1)
 
 if __name__ == "__main__":
     main()
