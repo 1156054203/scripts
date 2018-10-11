@@ -25,7 +25,9 @@ def filter(infile,outfile,depth):
     
     for line in f_in:
         line=line.strip()
-        if line.startswith("#CHROM"):
+        if line.startswith("##"):
+            continue 
+        elif line.startswith("#CHROM"):
             f_out.write(line+"\n")
         else:
             info=line.split("\t")[7]
