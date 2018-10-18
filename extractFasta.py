@@ -13,8 +13,8 @@ for line in fasta:
     if line == '':
         continue
     if line.startswith('>'):
-        seqname= line.lstrip('>')
-        seqname= re.sub('\..*', '', seqname)
+        seqname= line.lstrip('>').split(' ')[0]
+        #seqname= re.sub('\..*', '', seqname)
         fasta_dict[seqname]= ''
     else:
         fasta_dict[seqname] += line
