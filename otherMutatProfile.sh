@@ -68,7 +68,7 @@ for sample in $(eval echo \$${pro}_${tp});do
 done
 
 for sample in $(eval echo \$${pro}_${tp});do
-
+    var=`find ${prefix}/${sample}_${pro} -name "${sample}*.xls"`
     cat /online/home/chenyl/temp/mode.xls|sed -n '2,$p'|while read line;do
          context=`echo $line|awk '{OFS="\t"}{print$2,$3,$4,$5,$6,"'${sample}'"}'`
          index=`echo $line|awk '{print$1}'`
