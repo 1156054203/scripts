@@ -16,7 +16,7 @@ ref_hg19=/online/databases/gatk_bundle_2.8_hg19/ucsc.hg19.fasta
 ref_hg38=/online/databases/Homo_sapiens/hg38/hg38bundle/Homo_sapiens_assembly38.fasta
 
 WES_hg19=`cat /online/home/chenyl/temp/WES/wes-hg19|grep hg19|awk -F. '{print$1}'`
-WES_hg38=`cat /online/home/chenyl/temp/WES/wes-hg19|grep hg38|awk -F. '{print$1}'`
+WES_hg38=`cat /online/home/chenyl/temp/WES/wes-hg38|grep hg38|awk -F. '{print$1}'`
 WGS_hg19=`cat /online/home/chenyl/temp/WGS/wgs-hg19|grep hg19|awk -F. '{print$1}'`
 WGS_hg38=`cat /online/home/chenyl/temp/WGS/wgs-hg38|grep hg38|awk -F. '{print$1}'`
 
@@ -74,11 +74,12 @@ for sample in $(eval echo \$${pro}_${tp});do
          index=`echo $line|awk '{print$1}'`
          str=`echo $line|awk '{print$5}'`
          if [[ -z `grep "$str" $var` ]];then
-              sed -i "${index}i${context}" $var
+            if [[ -z `sed -n "${index}p" $var` ]];then
+                let num=$index-1
+                sed -i "${num}a${context}" $var
+            else
+                sed -i "${index}i${context}" $var
+            fi
          fi
     done
-    if [[ -z `grep 'TCT>TGT' $var` ]];then
-        context=`cat /online/home/chenyl/temp/mode.xls|sed -n '$p'|awk '{OFS="\t"}{print$2,$3,$4,$5,$6,"'${sample}'"}'`
-        sed -i "/TCG>TGG/a${context}" $var
-    fi
 done
