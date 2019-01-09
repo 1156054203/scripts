@@ -54,7 +54,8 @@ cat >${outdir}/map_${pair}.pbs <<stop
 
 cd ${outdir}
 time $strelkaDir/bin/hg38_configureStrelkaWorkflow.pl --normal=$nbam --tumor=$tbam --ref=$ref --config=$config --output-dir=./$pair
-      
+make -j 8
+
 stop
       
       echo $pair...Finished!
