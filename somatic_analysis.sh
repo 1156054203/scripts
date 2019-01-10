@@ -14,14 +14,15 @@ fi
 group=`echo $sheet|cut -d. -f1`
 tumor=(`cat $sheet|sed -n '1~2p'|cut -f1`)
 normal=(`cat $sheet|sed -n '2~2p'|cut -f1`)
-pro=(`cat $sheet|sed -n '1~2p'|cut -f3`)
+tpro=(`cat $sheet|sed -n '1~2p'|cut -f3`)
+npro=(`cat $sheet|sed -n '2~2p'|cut -f3`)
 
 prefix=/offline/Analysis/WGS
 ref=/online/databases/Homo_sapiens/hg38/hg38bundle/Homo_sapiens_assembly38.fasta
 bed=/online/databases/Homo_sapiens/hg_exome/Agilent_V6/hg38_Agilent_V6-col6.bed
 dbsnp=/online/databases/Homo_sapiens/hg38/hg38bundle/dbsnp_144.hg38.vcf.gz
-cosmic=/online/software/annovar/humandb/hg38_cosmic70.vcf
-gnomad=/online/software/annovar/humandb/hg38_gnomad_exome.vcf
+cosmic=/online/software/annovar/humandb/hg38_cosmic70.txt
+gnomad=/online/software/annovar/humandb/hg38_gnomad_exome.txt
 gatk=/online/home/chenyl/software/gatk-4.0.12.0/gatk
 strelkaDir=/online/software/strelka_workflow-1.0.15
 config=$strelkaDir/etc/strelka_config_bwa_default.ini
@@ -36,9 +37,10 @@ if [ $kind = 'strelka' ];then
    for i in `seq 0 $((${#tumor[@]}-1))`;do
        t=${tumor[$i]}
        n=${normal[$i]}
-       p=${pro[$i]}
-       tbam=$prefix/$p/$t/out/${t}.ready.bam
-       nbam=$prefix/$p/$n/out/${n}.ready.bam
+       tp=${tpro[$i]}
+       np=${npro[$i]}
+       tbam=$prefix/$tp/$t/out/${t}.ready.bam
+       nbam=$prefix/$np/$n/out/${n}.ready.bam
        pair=${t}-${n}
       
        #mkdir -p $outdir/$pair
@@ -71,9 +73,10 @@ elif [ $kind = 'mutect' ];then
    for i in `seq 0 $((${#tumor[@]}-1))`;do
        t=${tumor[$i]}
        n=${normal[$i]}
-       p=${pro[$i]}
-       tbam=$prefix/$p/$t/out/${t}.ready.bam
-       nbam=$prefix/$p/$n/out/${n}.ready.bam
+       tp=${tpro[$i]}
+       np=${npro[$i]}
+       tbam=$prefix/$tp/$t/out/${t}.ready.bam
+       nbam=$prefix/$np/$n/out/${n}.ready.bam
        pair=${t}-${n}
 
        mkdir -p $outdir/$pair
@@ -115,9 +118,10 @@ elif [ $kind = 'gatk' ];then
    for i in `seq 0 $((${#tumor[@]}-1))`;do
        t=${tumor[$i]}
        n=${normal[$i]}
-       p=${pro[$i]}
-       tbam=$prefix/$p/$t/out/${t}.ready.bam
-       nbam=$prefix/$p/$n/out/${n}.ready.bam
+       tp=${tpro[$i]}
+       np=${npro[$i]}
+       tbam=$prefix/$tp/$t/out/${t}.ready.bam
+       nbam=$prefix/$np/$n/out/${n}.ready.bam
        pair=${t}-${n}
 
        mkdir -p $outdir/$pair
@@ -140,7 +144,6 @@ $gatk --java-options "-Xmx20g" Mutect2 \
 -I $nbam \
 -tumor $t \
 -normal $n \
---germline-resource $gnomad \
 --disable-read-filter MateOnSameContigOrNoMappedMateReadFilter \
 -L $bed \
 -O ${pair}.vcf
