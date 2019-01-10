@@ -20,12 +20,13 @@ prefix=/offline/Analysis/WGS
 ref=/online/databases/Homo_sapiens/hg38/hg38bundle/Homo_sapiens_assembly38.fasta
 bed=/online/databases/Homo_sapiens/hg_exome/Agilent_V6/hg38_Agilent_V6-col6.bed
 dbsnp=/online/databases/Homo_sapiens/hg38/hg38bundle/dbsnp_144.hg38.vcf.gz
-cosmic=/online/software/annovar/humandb/hg38_cosmic70.txt
-gnomad=/online/software/annovar/humandb/hg38_gnomad_exome.txt
+cosmic=/online/software/annovar/humandb/hg38_cosmic70.vcf
+gnomad=/online/software/annovar/humandb/hg38_gnomad_exome.vcf
 gatk=/online/home/chenyl/software/gatk-4.0.12.0/gatk
 strelkaDir=/online/software/strelka_workflow-1.0.15
 config=$strelkaDir/etc/strelka_config_bwa_default.ini
-java=/online/software/jdk1.8.0_111/bin/java
+java8=/online/software/jdk1.8.0_111/bin/java
+java7=/online/software/jre1.7.0_71/bin/java
 mutect=/online/software/muTect-1.1.4.jar
 
 outdir=/online/home/chenyl/dongfang/$kind/$group
@@ -54,8 +55,9 @@ cat >${outdir}/map_${pair}.pbs <<stop
 
 cd ${outdir}
 time $strelkaDir/bin/hg38_configureStrelkaWorkflow.pl --normal=$nbam --tumor=$tbam --ref=$ref --config=$config --output-dir=./$pair
+cd ./$pair
 make -j 8
-
+     
 stop
       
       echo $pair...Finished!
@@ -77,7 +79,7 @@ elif [ $kind = 'mutect' ];then
        mkdir -p $outdir/$pair
        echo $pair...generating pbs file...
 
-cat >${outdir}/map_${pair}_panel.pbs <<stop
+cat >${outdir}/map_${pair}.pbs <<stop
 
 #PBS -N $pair
 #PBS -o ${outdir}/$pair/${pair}.o
@@ -88,16 +90,16 @@ cat >${outdir}/map_${pair}_panel.pbs <<stop
 #PBS -q high
 
 cd $outdir/$pair
-time $java -Xmx20g -jar muTect-1.1.4.jar \
---analysis_type MuTect \
---reference_sequence $ref \
+time $java7 -Xmx20g -jar $mutect \
+-T MuTect \
+-R $ref \
+-I:normal $nbam \
+-I:tumor $tbam \
 --cosmic $cosmic \
 --dbsnp $dbsnp \
 --intervals $bed \
---input_file:normal $nbam \
---input_file:tumor $tbam \
 --out ${pair}.vcf \
--nt 4 \
+-nt 32 \
 -nct 10
 
 stop
@@ -121,7 +123,7 @@ elif [ $kind = 'gatk' ];then
        mkdir -p $outdir/$pair
        echo $pair...generating pbs file...
 
-cat >${outdir}/map_${pair}_panel.pbs <<stop
+cat >${outdir}/map_${pair}.pbs <<stop
 
 #PBS -N $pair
 #PBS -o ${outdir}/$pair/${pair}.o
@@ -138,7 +140,7 @@ $gatk --java-options "-Xmx20g" Mutect2 \
 -I $nbam \
 -tumor $t \
 -normal $n \
---germline-resource $gnomad \
+--germline-resource $gnomad
 --disable-read-filter MateOnSameContigOrNoMappedMateReadFilter \
 -L $bed \
 -O ${pair}.vcf
