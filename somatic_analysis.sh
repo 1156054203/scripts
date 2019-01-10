@@ -140,7 +140,7 @@ $gatk --java-options "-Xmx20g" Mutect2 \
 -I $nbam \
 -tumor $t \
 -normal $n \
---germline-resource $gnomad
+--germline-resource $gnomad \
 --disable-read-filter MateOnSameContigOrNoMappedMateReadFilter \
 -L $bed \
 -O ${pair}.vcf
