@@ -1,4 +1,4 @@
-#before	ref	after	alt	context	type
+before	ref	after	alt	context	type
 A	C	A	A	ACAA	C>A
 A	C	C	A	ACCA	C>A
 A	C	G	A	ACGA	C>A
