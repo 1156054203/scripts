@@ -1,4 +1,4 @@
-!/usr/bin/Rscript
+#!/usr/bin/Rscript
 .libPaths('/online/home/chenyl/software/R/')
 library(ggplot2)
 myfun <- function(sam){
