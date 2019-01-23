@@ -3,136 +3,150 @@
 cat('Start at',date(),'\n')
 
 args <- commandArgs(T)
-pro <- args[1]
-group <- args[2]
-myfun <- function(sam){
 
-setwd(paste('/online/home/chenyl/dongfang/',pro,'/',group,sep=''))
+myfun <- function(x){
+
+path <- dirname(x)
+sam <- basename(x)
+
+setwd(path)
 
 substitution <- read.table(sam,header=F,sep='\t',stringsAsFactors=F)
-#colnames(substitution) <- c('chr','pos','ref','alt','flankseq5','flankseq3','gene','strand')
+#colnames(substitution) <- c('chr','pos','ref','alt','flank5seq','flank3seq','gene','strand')
 tmpname <- strsplit(sam,split='\\.')[[1]][1]
-name <- paste(tmpname,'.test.xls',sep='')
+name <- paste(tmpname,'.ready.txt',sep='')
 
-data1 <- data.frame('chr','pos','before','ref','after','alt','strand')
+data1 <- data.frame('chr','pos','ref','alt','flank5seq','flank3seq','before','refcontext','after','altcontext','gene','strand')
 write.table(data1,name,append=T,sep='\t',quote=F,row.names=F,col.names=F)
 
 for (i in 1:nrow(substitution)) {
    tmp <- substitution[i,]
    chr=tmp[,1]
    pos=tmp[,2]
+   ref=tmp[,3]
+   alt=tmp[,4]
+   flank5=tmp[,5]
+   before=substr(flank5,10,10)
+   flank3=tmp[,6]
+   after=substr(flank3,1,1)
+   gene=tmp[,7]
    strand=tmp[,8]
-   if (tmp[,8]==1) {
-      flank5=tmp[,5]
-      flank3=tmp[,6]
-      if (tmp[,3]=='C'|tmp[,3]=='T') {
-         ref=tmp[,3]
-         alt=tmp[,4]
-         before=substr(flank5,10,10)
-         after=substr(flank3,1,1)
+   if (strand==1) {
+      #flank5=tmp[,5]
+      #flank3=tmp[,6]
+      if (ref=='C'|ref=='T') {
+         refcontext=ref
+         altcontext=alt
 
-         rawdata=c(chr,pos,before,ref,after,alt,strand)
+         rawdata=c(chr,pos,ref,alt,flank5,flank3,before,refcontext,after,altcontext,gene,strand)
       } 
       else {
-         reftmp=tmp[,3]
-         if (reftmp=='A') {
-            ref='T' }
-         else if (reftmp=='G') {
-            ref='C' }
+         #reftmp=tmp[,3]
+         if (ref=='A') {
+            refcontext='T' 
+            altcontext='A'}
+         else if (ref=='G') {
+            refcontext='C' 
+            altcontext='G'}
          
-         alttmp=tmp[,4]
-         if (alttmp=='A') {
-            alt='T' }
-         else if (alttmp=='C') {
-            alt='G' }
-         else if (alttmp=='G') {
-            alt='C' }
-         else if (alttmp=='T') {
-            alt='A' }
+         #alttmp=tmp[,4]
+         #if (alt=='A') {
+         #   alt='T' }
+         #else if (alttmp=='C') {
+         #   alt='G' }
+         #else if (alttmp=='G') {
+         #   alt='C' }
+         #else if (alttmp=='T') {
+         #   alt='A' }
          
-         betmp=substr(flank5,10,10)
-         if (betmp=='A') {
-            before='T' }
-         else if (betmp=='C') { 
-            before='G' }
-         else if (betmp=='G') {
-            before='C' }
-         else if (betmp=='T') {
-            before='A' }
+        #betmp=substr(flank5,10,10)
+        #if (betmp=='A') {
+        #   before='T' }
+        #else if (betmp=='C') { 
+        #   before='G' }
+        #else if (betmp=='G') {
+        #   before='C' }
+        #else if (betmp=='T') {
+        #   before='A' }
 
-         aftmp=substr(flank3,1,1)
-         if (aftmp=='A') {
-            after='T' }
-         else if (aftmp=='C') {
-            after='G' }
-         else if (aftmp=='G') {
-            after='C' }
-         else if (aftmp=='T') {
-            after='A' }
+        #aftmp=substr(flank3,1,1)
+        #if (aftmp=='A') {
+        #   after='T' }
+        #else if (aftmp=='C') {
+        #   after='G' }
+        #else if (aftmp=='G') {
+        #   after='C' }
+        #else if (aftmp=='T') {
+        #   after='A' }
 
-        rawdata=c(chr,pos,before,ref,after,alt,strand)
+        rawdata=c(chr,pos,ref,alt,flank5,flank3,before,refcontext,after,altcontext,gene,strand)
       }  
    }
    else {
-      flank5=tmp[,5]
-      flank3=tmp[,6]
-      if (tmp[,3]=='A'|tmp[,3]=='G') {
-         ref=tmp[,3]
-         alt=tmp[,4]
-         before=substr(flank5,10,10)
-         after=substr(flank3,1,1)
-         rawdata=c(chr,pos,before,ref,after,alt,strand)
+      #flank5=tmp[,5]
+      #flank3=tmp[,6]
+      if (ref=='A'|ref=='G') {
+         refcontext=ref
+         altcontext=alt
+        
+         rawdata=c(chr,pos,ref,alt,flank5,flank3,before,refcontext,after,altcontext,gene,strand)
       }
       else {
 
-         reftmp=tmp[,3]
-         if (reftmp=='C') {
-            ref='G' }
-         else if (reftmp=='T') {
-            ref='A' }
+         #reftmp=tmp[,3]
+         if (ref=='C') {
+            refcontext='G' 
+            altcontext='C'}
+         else if (ref=='T') {
+            refcontext='A' 
+            altcontext='T'}
 
-         alttmp=tmp[,4]
-         if (alttmp=='A') {
-            alt='T' }
-         else if (alttmp=='C') {
-            alt='G' }
-         else if (alttmp=='G') {
-            alt='C' }
-         else if (alttmp=='T') {
-            alt='A' }
+         #alttmp=tmp[,4]
+         #if (alttmp=='A') {
+         #   alt='T' }
+         #else if (alttmp=='C') {
+         #   alt='G' }
+         #else if (alttmp=='G') {
+         #   alt='C' }
+         #else if (alttmp=='T') {
+         #   alt='A' }
 
-        betmp=substr(flank5,10,10)
-         if (betmp=='A') {
-            before='T' }
-         else if (betmp=='C') {
-            before='G' }
-         else if (betmp=='G') {
-            before='C' }
-         else if (betmp=='T') {
-            before='A' }
+         #betmp=substr(flank5,10,10)
+         #if (betmp=='A') {
+         #   before='T' }
+         #else if (betmp=='C') {
+         #   before='G' }
+         #else if (betmp=='G') {
+         #   before='C' }
+         #else if (betmp=='T') {
+         #   before='A' }
 
-         aftmp=substr(flank3,1,1)
-         if (aftmp=='A') {
-            after='T' }
-         else if (aftmp=='C') {
-            after='G' }
-         else if (aftmp=='G') {
-            after='C' }
-         else if (aftmp=='T') {
-            after='A' }
+         #aftmp=substr(flank3,1,1)
+         #if (aftmp=='A') {
+         #   after='T' }
+         #else if (aftmp=='C') {
+         #   after='G' }
+         #else if (aftmp=='G') {
+         #   after='C' }
+         #else if (aftmp=='T') {
+         #   after='A' }
 
-         rawdata=c(chr,pos,before,ref,after,alt,strand)
+         rawdata=c(chr,pos,ref,alt,flank5,flank3,before,refcontext,after,altcontext,gene,strand)
       }
    }
-data2 <- data.frame(chr=rawdata[1],pos=rawdata[2],before=rawdata[3],ref=rawdata[4],after=rawdata[5],alt=rawdata[6],strand=rawdata[7])
+data2 <- data.frame(chr=rawdata[1],pos=rawdata[2],ref=rawdata[3],alt=rawdata[4],flank5seq=rawdata[5],flank5seq=rawdata[6],before=rawdata[7],
+refcontext=rawdata[8],after=rawdata[9],altcontext=rawdata[10],gene=rawdata[11],strand=rawdata[12])
+
 write.table(data2,name,append=T,sep='\t',quote=F,row.names=F,col.names=F)
 }
 
 }
 
-files <- list.files( paste('/online/home/chenyl/dongfang/',pro,'/',group,sep=''),'ready.txt')
-for (x in files){
-  myfun(x)
-}
+#files <- list.files(paste('/online/home/chenyl/dongfang/',pro,'/',group,sep=''),'ready.txt')
+#for (x in files){
+#  myfun(x)
+#}
+
+myfun(args[1])
 
 cat('Ended at',date(),'\n')
