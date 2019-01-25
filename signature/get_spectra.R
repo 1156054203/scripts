@@ -43,21 +43,19 @@ for (i in 1:nrow(substitution)) {
       else {
          #reftmp=tmp[,3]
          if (ref=='A') {
-            refcontext='T' 
-            altcontext='A'}
+            refcontext='T'}
          else if (ref=='G') {
-            refcontext='C' 
-            altcontext='G'}
+            refcontext='C'}
          
          #alttmp=tmp[,4]
-         #if (alt=='A') {
-         #   alt='T' }
-         #else if (alttmp=='C') {
-         #   alt='G' }
-         #else if (alttmp=='G') {
-         #   alt='C' }
-         #else if (alttmp=='T') {
-         #   alt='A' }
+         if (alt=='A') {
+            altcontext='T' }
+         else if (alt=='C') {
+            altcontext='G' }
+         else if (alt=='G') {
+            altcontext='C' }
+         else if (alt=='T') {
+            altcontext='A' }
          
         #betmp=substr(flank5,10,10)
         #if (betmp=='A') {
@@ -95,21 +93,19 @@ for (i in 1:nrow(substitution)) {
 
          #reftmp=tmp[,3]
          if (ref=='C') {
-            refcontext='G' 
-            altcontext='C'}
+            refcontext='G'}
          else if (ref=='T') {
-            refcontext='A' 
-            altcontext='T'}
+            refcontext='A'}
 
          #alttmp=tmp[,4]
-         #if (alttmp=='A') {
-         #   alt='T' }
-         #else if (alttmp=='C') {
-         #   alt='G' }
-         #else if (alttmp=='G') {
-         #   alt='C' }
-         #else if (alttmp=='T') {
-         #   alt='A' }
+         if (alt=='A') {
+            altcontext='T' }
+         else if (alt=='C') {
+            altcontext='G' }
+         else if (alt=='G') {
+            altcontext='C' }
+         else if (alt=='T') {
+            altcontext='A' }
 
          #betmp=substr(flank5,10,10)
          #if (betmp=='A') {
