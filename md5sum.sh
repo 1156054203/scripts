@@ -1,25 +1,24 @@
 #!/bin/bash
-prefix=/offline/Analysis/Panel/V18000-P003
-pro=$1
 
-for sample in `ls -l $prefix/$pro|grep '^d'|awk '{print$NF}'`;do
+if [ $# -eq 1 ];then
+#
+   run_dir=$1 #
+fi
 
-    Read1=`md5sum -t $prefix/$pro/$sample/*${sample}*_1.fq.gz|cut -d' ' -f1`
-    Read2=`md5sum -t $prefix/$pro/$sample/*${sample}*_2.fq.gz|cut -d' ' -f1`
-    md1=`grep "$Read1" $prefix/$pro/$sample/*${sample}*.txt|cut -d' ' -f1`
-    md2=`grep "$Read2" $prefix/$pro/$sample/*${sample}*.txt|cut -d' ' -f1`
 
-    if [ $Read1 == $md1 ];then
-       echo "$sample read1 is OK : $md1"
-    else
-       echo "$sample read1 is failed"
-    fi
-
-    if [ $Read2 = $md2 ];then
-       echo -e "$sample read2 is OK : $md2 \n"
-    else
-       echo -e "$sample read2 is failed \n"
-    fi
+for folder in $run_dir;do
+        echo -n "$folder" "["`date +"%Y-%m-%d %H:%M:%S"`"]" "start "
+        cd $folder
+        cur_dir=`pwd`
+        for file in `find . -name '*.fastq.gz'`;do
+                dir_name=`dirname $file`
+                filename=`basename $file`
+                cd ${dir_name}
+                md5sum ${filename} >${filename}.md5
+                cd ${cur_dir}
+        done
+        echo -e "["`date +"%Y-%m-%d %H:%M:%S"`"]" "done"
+        cd ..
 done
 
-echo 'The script is end'
+echo "["`date +"%Y-%m-%d %H:%M:%S"`"]" "All done"
