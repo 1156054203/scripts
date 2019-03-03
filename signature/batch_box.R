@@ -39,7 +39,7 @@ palette <- c('#A52A2A','#FFC125','#B03060','#76EE00','#A0522D','#BCEE68',
 
 ggplot(frame2,aes(factor(context,levels=context[1:96]),num*100,group=context,color=type))+
        geom_boxplot(outlier.shape=NA)+
-       scale_fill_manual(values=palette)+
+       scale_color_manual(values=palette)+
       theme(panel.background=element_blank(),panel.grid =element_blank()
           ,plot.title=element_text(hjust=0,size=12)
           ,panel.border=element_blank(),axis.line.y =element_line(color='black')
@@ -60,13 +60,14 @@ ggplot(frame2,aes(factor(context,levels=context[1:96]),num*100,group=context,col
     annotate('text',x=88.5,y=tag,color='black',label='T>G')+
     labs(title='')+
     scale_y_continuous('Proportion(%)')+
+    coord_cartesian(ylim=c(0, 3))+ ## Modify axis display range,but do not remove data
     scale_x_discrete('Preceded by 5\'\nFollowed by 3\'',
                        labels=rep(c('A\nA','\n\nC','\n\n\nG','\n\n\n\nT'
                                     ,'C\nA','\n\nC','\n\n\nG','\n\n\n\nT'
                                     ,'G\nA','\n\nC','\n\n\nG','\n\n\n\nT'
                                     ,'T\nA','\n\nC','\n\n\nG','\n\n\n\nT'),times=6))
 tmpname <- strsplit(arg[1],split='\\.')[[1]][1]
-ggsave(paste(tmpname,'.png',sep=''),height=204,width=360,units='mm',limitsize=F)
+ggsave(paste(tmpname,'.png',sep=''),height=200,width=360,units='mm',limitsize=F)
 }
 
 
