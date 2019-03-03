@@ -1,5 +1,5 @@
 #!/bin/bash
-##somatic mutation analysis by strelka and Mutect and Mutect2
+##somatic mutation analysis by strelka and MuSE and Mutect2
 
 usage="bash $0 user sheet kind"
 if [ $# -eq 3 ];then
