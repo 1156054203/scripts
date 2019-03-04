@@ -75,7 +75,7 @@ $python $getSpectra $outdir/${sample}.tmp.txt
 
 cat $outdir/${sample}.ready.txt | grep -v '^#' | awk '{OFS="\t"}{print \$7,\$8,\$9,\$10}'|sort|uniq -c|awk '{OFS="\t"}{print\$2,\$3,\$4,\$5,\$2\$3\$4\$5,\$1}' | join -a1 -1 5 -2 5 -o 1.1 1.2 1.3 1.4 1.6 2.6 /online/home/chenyl/dongfang/mode.xls - | awk '{OFS="\t"}{if(\$6=="")print\$1,\$2,\$3,\$4,\$5;else print\$1,\$2,\$3,\$4,\$6}' >$outdir/${sample}.ready.xls
 
-sed -i "1i before\tref\tafter\talt\t${name}" $outdir/${sample}.ready.xls
+sed -i "1i before\tref\tafter\talt\t${sample}" $outdir/${sample}.ready.xls
 stop
 
 chmod 755 ${prefix}/intersection/run_${sample}_spectra.pbs
