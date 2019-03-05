@@ -19,7 +19,7 @@ cache=/online/home/wanghn/data/vep
 vep_path=/online/home/chenyl/software/ensembl-vep-release-92
 bedtool=/online/software/bedtools-2.25.0/bin/bedtools
 python=/online/software/python-3.5.1/bin/python3
-getSpectra=/online/home/chenyl/dongfang/get_spectra2.py
+getSpectra=/online/home/chenyl/dongfang/get_spectra.py
     
 
 for sample in ${list[@]};do
