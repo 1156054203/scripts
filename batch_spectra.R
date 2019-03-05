@@ -3,7 +3,7 @@
 .libPaths('/online/home/chenyl/software/R')
 myfun <- function(file1){
 tframe <- read.table(file1,header=T)
-for (i in 5:(ncol(tframe)-1)){
+for (i in 5:ncol(tframe)){
 sam <- tframe[,c(1:4,i)]
 name <- colnames(sam)[5]
 
