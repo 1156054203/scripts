@@ -23,7 +23,7 @@ for var in `find $prefix/group* -maxdepth 1 -name "*.isec.anno.vcf"`;do
     #5 flank_sequence
     cat $var|grep -v '^#'|awk -F '[\t|]' '{print$1,$2,$27}'|awk 'BEGIN{OFS="\t"}{if($3=="1")print$1,$2-11,$2-1,"forward",1,"+";else print$1,$2,$2+10,"reverse",1,"-"}' >${out}/${name}.5flank.bed
     #3 flank_sequence
-    cat $var|grep -v '^#'|awk -F '[\t|]' '{print$1,$2,$27}'|awk 'BEGIN{OFS="\t"}{if($3=="1")print$1,$2,$2+10,"reverse",1,"-";else print$1,$2-11,$2-1,"forward",1,"+"}' >${out}/${name}.3flank.bed
+    cat $var|grep -v '^#'|awk -F '[\t|]' '{print$1,$2,$27}'|awk 'BEGIN{OFS="\t"}{if($3=="1")print$1,$2,$2+10,"forward",1,"+";else print$1,$2-11,$2-1,"reverse",1,"-"}' >${out}/${name}.3flank.bed
 done
 
 for var in `find $prefix/group* -name "*.bed"`;do
