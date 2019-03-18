@@ -34,23 +34,30 @@ with open(file,'r') as f:
         if line.startswith('#'):
             continue
         chr,pos,ref,alt,flank5seq,flank3seq,gene,strand=line.strip().split('\t')
-        before=flank5seq[9]
-        after=flank3seq[0]
-        #print(strand,type(strand))
+        tmp5=flank5seq[9]
+        tmp3=flank3seq[0]
         if strand == '1':
             if ref == 'C' or ref== 'T':
                 refcontext=ref
                 altcontext=alt
+                before=tmp5
+                after=tmp3
             else:
                 refcontext=dict[ref]
                 altcontext=dict[alt]
+                before=dict[tmp5]
+                after=dict[tmp3]
         else:
             if ref == 'A' or ref=='G':
-                refcontext=ref
-                altcontext=alt
+                refcontext=dict[ref]
+                altcontext=dict[alt]
+                before=tmp5
+                after=tmp3
             else:
                 refcontext=dict[ref]
                 altcontext=dict[alt]
+                before=tmp5
+                after=tmp3
         outfile.write(chr+'\t'+pos+'\t'+ref+'\t'+alt+'\t'+flank5seq+'\t'+flank3seq+'\t'+before \
                               +'\t'+refcontext+'\t'+after+'\t'+altcontext+'\t'+gene+'\t'+strand+'\n')
 outfile.close()
