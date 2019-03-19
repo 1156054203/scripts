@@ -45,8 +45,8 @@ with open(file,'r') as f:
             else:
                 refcontext=dict[ref]
                 altcontext=dict[alt]
-                before=dict[tmp5]
-                after=dict[tmp3]
+                before=dict[tmp3]
+                after=dict[tmp5]
         else:
             if ref == 'A' or ref=='G':
                 refcontext=dict[ref]
@@ -54,10 +54,10 @@ with open(file,'r') as f:
                 before=tmp5
                 after=tmp3
             else:
-                refcontext=dict[ref]
-                altcontext=dict[alt]
-                before=tmp5
-                after=tmp3
+                refcontext=ref
+                altcontext=alt
+                before=dict[tmp3]
+                after=dict[tmp5]
         outfile.write(chr+'\t'+pos+'\t'+ref+'\t'+alt+'\t'+flank5seq+'\t'+flank3seq+'\t'+before \
                               +'\t'+refcontext+'\t'+after+'\t'+altcontext+'\t'+gene+'\t'+strand+'\n')
 outfile.close()
