@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#get information for encode web
 
 import sys
 import time
@@ -26,6 +27,7 @@ for cell in sheet.col_values(0):
     r1 = requests.get(exper_url, headers = header)
     tree1 = etree.HTML(r1.text)
     antibodies = tree1.xpath("//table[@class='table table-sortable']/tbody/tr[1]/td[5]/a/text()")
+    control=tree1.xpath("//li[@class='multi-comma']/a/text()")
     if len(antibodies) == 0:
         sys.stdout.write("Error while get productid of %s\n")
         continue
@@ -35,5 +37,5 @@ for cell in sheet.col_values(0):
     r2 = requests.get(anti_url, headers = header)
     tree2 = etree.HTML(r2.text)
     pro_id = tree2.xpath("//div[@data-test='productid']/dd/a/text()")
-    sys.stdout.write("%s\t%s\t%s\n" % (num, anti, pro_id[0]))
+    sys.stdout.write("%s\t%s\t%s\t%s\n" % (num, control[0], anti, pro_id[0]))
     time.sleep(randint(1,3))
