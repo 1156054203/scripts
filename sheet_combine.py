@@ -5,7 +5,7 @@ import pandas as pd
 import os,sys,glob
 
 if len(sys.argv) < 4 :
-    sys.exit('Usage:\n     python3 sys.argv[0] inpath1 inpath2 outpath')
+    sys.exit('Usage:\n     python3 %s inpath1 inpath2 outpath' % sys.argv[0])
 
 def merge(inpath1,inpath2,outpath):
     files=glob.glob(inpath1+'/'+'*annotation_simple.txt')
