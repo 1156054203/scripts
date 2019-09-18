@@ -69,7 +69,6 @@ def runblast(i,evalue,maxlimit):
          record = q.get()
          if record is None: break
          logger.info("Thread %d blast for record %s start." % (i,record.id))
-         print('test')
          trynum = 0
          while trynum < 10:
              trynum += 1
@@ -93,13 +92,11 @@ def runblast(i,evalue,maxlimit):
          else:
              species = "No Hit"
 
-         print(species)
          logger.info("Thread %d blast for record %s done." %(i,record.id))
          threadlock.acquire()
          speciesDict[species] = speciesDict[species] + 1 if species in speciesDict else 1
          threadlock.release()
          q.task_done()
-         print('done')
 
 if __name__=='__main__':
     args=parse_args()
