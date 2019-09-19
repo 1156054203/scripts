@@ -6,15 +6,15 @@ import os,re,sys,logging,threading,gzip,time
 from queue import Queue
 
 def parse_args(): 
-    parser = argparse.ArgumentParser(usage='\n     python %(prog)s [options]')
+    parser = argparse.ArgumentParser(usage='\n     python %(prog)s fastq [options] [-h helps]')
     parser.add_argument('fastq',metavar='fastq',help='input fastq file')
-    parser.add_argument('-o',dest='outdir',metavar='outdir',default='.',help="output directory [default:%(default)s]")
-    parser.add_argument('-f',dest='outfile',metavar='outfile',default='species_stat.txt',help="output file [default:%(default)s]")
-    parser.add_argument('-n',dest='seqnum',metavar='seqnum',type=int,default=1000,help='abstract how many reads in each fastq [default:%(default)s]')
-    parser.add_argument('-t',dest='thread',metavar='thread',type=int,default=8,help="thread number [default:%(default)s]")
-    parser.add_argument('-e',dest='evalue',metavar='evalue',default="1e-5",help="evalue [default:%(default)s]")
-    parser.add_argument('-m',dest='maxlimit',metavar='maxlimit',type=int,default=1,help="Number of hitlist_size to logger.debug [default:%(default)s]")
-    parser.add_argument('-g',dest='logfile',metavar='logfile',default='blast.log',help="log file name [default:%(default)s]")
+    parser.add_argument('-o',dest='outdir',metavar='outdir',default='.',help="output directory [default: %(default)s]")
+    parser.add_argument('-f',dest='outfile',metavar='outfile',default='species_stat.txt',help="output file [default: %(default)s]")
+    parser.add_argument('-n',dest='seqnum',metavar='seqnum',type=int,default=1000,help='abstract how many reads from fastq [default: %(default)s]')
+    parser.add_argument('-t',dest='thread',metavar='thread',type=int,default=8,help="thread number [default: %(default)s]")
+    parser.add_argument('-e',dest='evalue',metavar='evalue',default="1e-5",help="expect evalue cutoff [default: %(default)s]")
+    parser.add_argument('-m',dest='maxlimit',metavar='maxlimit',type=int,default=1,help="number of blast hits to return [default: %(default)s]")
+    parser.add_argument('-g',dest='logfile',metavar='logfile',default='blast.log',help="log file name [default: %(default)s]")
     return parser.parse_args()
 
 def createlogger(name,filename):
@@ -102,6 +102,8 @@ def runblast(i,evalue,maxlimit):
 
 if __name__=='__main__':
     args=parse_args()
+    if args.fastq:
+        fastq=args.fastq
     if args.outdir:
         outdir=args.outdir
         outdir = os.path.abspath(outdir)
@@ -122,4 +124,4 @@ if __name__=='__main__':
     threadlock = threading.Lock()
     q = Queue(thread)
     speciesDict={}
-    main(args.fastq,seqnum,thread,evalue,maxlimit,outdir,outfile)
+    main(fastq,seqnum,thread,evalue,maxlimit,outdir,outfile)
