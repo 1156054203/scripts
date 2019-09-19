@@ -9,6 +9,7 @@ def parse_args():
     parser = argparse.ArgumentParser(usage='\n     python %(prog)s [options]')
     parser.add_argument('fastq',metavar='fastq',help='input fastq file')
     parser.add_argument('-o',dest='outdir',metavar='outdir',default='.',help="output directory [default:%(default)s]")
+    parser.add_argument('-f',dest='outfile',metavar='outfile',default='species_stat.txt',help="output file [default:%(default)s]")
     parser.add_argument('-n',dest='seqnum',metavar='seqnum',type=int,default=1000,help='abstract how many reads in each fastq [default:%(default)s]')
     parser.add_argument('-t',dest='thread',metavar='thread',type=int,default=8,help="thread number [default:%(default)s]")
     parser.add_argument('-e',dest='evalue',metavar='evalue',default="1e-5",help="evalue [default:%(default)s]")
@@ -24,7 +25,7 @@ def createlogger(name,filename):
     logger.addHandler(handler)
     return logger
 
-def main(fastq,seqnum,thread,evalue,maxlimit,outdir):
+def main(fastq,seqnum,thread,evalue,maxlimit,outdir,outfile):
     threadlist=[]
     recordlist=[]
     filehand = gzip.open(fastq, "rt") if os.path.splitext(fastq)[1] == ".gz" or os.path.splitext(fastq)[1] == ".gzip" else open(fastq, 'r')
@@ -58,7 +59,7 @@ def main(fastq,seqnum,thread,evalue,maxlimit,outdir):
    
     logger.info("all threads done.")
     
-    statfh = open(os.path.join(outdir, 'species_stat.txt'), 'w')
+    statfh = open(os.path.join(outdir,outfile), 'w')
     totalnum = sum(speciesDict.values())
     for species in speciesDict.keys():
         statfh.write('%s\t%d\t%.2f%%\n' %(species, speciesDict[species], speciesDict[species]/totalnum*100))
@@ -101,20 +102,22 @@ def runblast(i,evalue,maxlimit):
 if __name__=='__main__':
     args=parse_args()
     if args.outdir:
-       outdir=args.outdir
-       outdir = os.path.abspath(outdir)
-       if not os.path.exists(outdir): os.makedirs(outdir)
+        outdir=args.outdir
+        outdir = os.path.abspath(outdir)
+        if not os.path.exists(outdir): os.makedirs(outdir)
+    if args.outfile:
+        outfile=args.outfile
     if args.seqnum:
-       seqnum=args.seqnum
+        seqnum=args.seqnum
     if args.thread:
-       thread=args.thread
+        thread=args.thread
     if args.evalue:
-       evalue=args.evalue
+        evalue=args.evalue
     if args.maxlimit:
-       maxlimit=args.maxlimit
+        maxlimit=args.maxlimit
     
     logger=createlogger('blast',os.path.join(outdir,'run.log'))
     threadlock = threading.Lock()
     q = Queue(thread)
     speciesDict={}
-    main(args.fastq,seqnum,thread,evalue,maxlimit,outdir)
+    main(args.fastq,seqnum,thread,evalue,maxlimit,outdir,outfile)
