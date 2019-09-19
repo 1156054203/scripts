@@ -14,6 +14,7 @@ def parse_args():
     parser.add_argument('-t',dest='thread',metavar='thread',type=int,default=8,help="thread number [default:%(default)s]")
     parser.add_argument('-e',dest='evalue',metavar='evalue',default="1e-5",help="evalue [default:%(default)s]")
     parser.add_argument('-m',dest='maxlimit',metavar='maxlimit',type=int,default=1,help="Number of hitlist_size to logger.debug [default:%(default)s]")
+    parser.add_argument('-g',dest='logfile',metavar='logfile',default='blast.log',help="log file name [default:%(default)s]")
     return parser.parse_args()
 
 def createlogger(name,filename):
@@ -115,8 +116,9 @@ if __name__=='__main__':
         evalue=args.evalue
     if args.maxlimit:
         maxlimit=args.maxlimit
-    
-    logger=createlogger('blast',os.path.join(outdir,'run.log'))
+    if args.logfile:
+        logfile=args.logfile
+    logger=createlogger('blast',os.path.join(outdir,logfile))
     threadlock = threading.Lock()
     q = Queue(thread)
     speciesDict={}
