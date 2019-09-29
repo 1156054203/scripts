@@ -19,9 +19,9 @@ class motif_screen:
         allmatch = re.findall(pattern,str(aaseq))
         mitseq=[]
         for i in allmatch:
-            start=re.search(i,str(aaseq)).span()[0]*3
-            end=re.search(i,str(aaseq)).span()[1]*3
-            mitseq.append(('start: %s' % start,'end: %s' % end,'motif: %s' % str(ntseq[start:end])))
+            start=re.search(i,str(aaseq)).span()[0]
+            end=re.search(i,str(aaseq)).span()[1]
+            mitseq.append(('start: %s' % start,'end: %s' % end,'motif: %s' % str(i)))
         mitseq.append(('protein: %s' % str(aaseq)))
         return mitseq
 
