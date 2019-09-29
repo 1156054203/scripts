@@ -9,11 +9,11 @@ import matplotlib.pyplot as mat
 
 class baseCount:
     def __init__(self,fasta):
-        self.input=fasta
+        self.fasta=fasta
  
     def get_stat(self):
         res={}
-        with open(input) as file:
+        with open(self.fasta) as file:
             for line in file:
                 if line.startswith(">"):
                     flag=False
@@ -25,17 +25,17 @@ class baseCount:
                     continue
                 if flag:
                     line=self.re_complement(line)
-                    statA+=line.count('A')
-                    statC+=line.count('C')
-                    statG+=line.count('G')
-                    statT+=line.count('T')
+                    statA=line.count('A')
+                    statC=line.count('C')
+                    statG=line.count('G')
+                    statT=line.count('T')
                     res[chrname].append([statA,statC,statG,statT])
                     
                 else:
-                    statA+=line.count('A')
-                    statC+=line.count('C')
-                    statG+=line.count('G')
-                    statT+=line.count('T')
+                    statA=line.count('A')
+                    statC=line.count('C')
+                    statG=line.count('G')
+                    statT=line.count('T')
                     res[chrname].append([statA,statC,statG,statT])
         return res
 
@@ -49,7 +49,7 @@ class baseCount:
     
     def get_res(self):
         res=self.get_stat()
-        gclist,ntlist=[],[]
+        gclist,ntlist,outnt=[],[],[]
         for key,value in res.items():
             nta=sum([x[0] for x in value])
             ntc=sum([x[1] for x in value])
@@ -63,10 +63,12 @@ class baseCount:
             ntlist.append([key,'C',ncp])
             ntlist.append([key,'G',ngp])
             ntlist.append([key,'T',ntp])
-        return gclist,ntlist
+            outnt.append([key,nap,ncp,ngp,ntp,gcp])
+        return gclist,ntlist,outnt
 
     def plot(self):
-        gclist,ntlist=self.get_res()
+        gclist,ntlist,outnt=self.get_res()
+        outtable=pd.DataFrame(outnt,columns=['Chr','A','C','G','T','GC'])
         gctable=pd.DataFrame(gclist,columns=['Chr','GC'])
         nttable=pd.DataFrame(ntlist,columns=['Chr','base','value'])
         #mat.rc('font',family='SimHei',size="15")
@@ -79,10 +81,13 @@ class baseCount:
         gcfig=sn.barplot(x='Chr',y='GC',data=gctable,order=chrorder)
         gcfig.set_xlabel('Chromosome');gcfig.set_ylabel('GC content');gcfig.set_xticklabels(gcfig.get_xticklabels(),rotation=30)
         mat.savefig('nt_gc_freq.png') 
+        return outtable
 
 if __name__=='__main__':
     if len(sys.argv) < 2:
         print('Usage:\n     python  %s  orf_trans_all_R64-2-1_20150113.fasta' % sys.argv[0])
         sys.exit()
     instance=baseCount(sys.argv[1])
-    instance.plot()
+    out=instance.plot()
+    out.to_csv('nt_gc_freq.txt',header=True,index=False,sep='\t',na_rep='NA')
+    
