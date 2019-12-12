@@ -16,7 +16,6 @@ html=etree.HTML(response.text)
 samples=html.xpath('//td[@valign="top"]/a/text()')[1:]
 species=html.xpath('//tr[@valign="top"]/td/a/text()')[0]
 
-table=[]
 for sample in samples:
     req=requests.get('https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+sample,headers=header,params=None)
     html2=etree.HTML(req.text)
