@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time,os,argparse
+import time,os,argparse,sys
 from random import randint
 from selenium import webdriver
 #chrome browser driver: http://chromedriver.storage.googleapis.com/index.html
 
 def parse_args():
-    usage = 'python webfresh.py -u url [-n num]'
-    parser = argparse.ArgumentParser(usage=usage)
-    parser.add_argument('-u',dest='url',metavar='url',required=True,help="web link need to fresh.")
+    parser = argparse.ArgumentParser(usage="""python %(prog)s -u url [-n num]""")
+    parser.add_argument('-u',dest='url',metavar='url',help="web link need to fresh.")
     parser.add_argument('-n',dest='num',metavar='num',type=int,default=200,help="fresh times, default: %(default)s.")
-    return parser.parse_args()
+    return parser
 
 def refresh(url,num):
     driver = webdriver.Chrome("/mnt/c/software/chrome/chromedriver.exe")
@@ -21,6 +20,11 @@ def refresh(url,num):
     driver.close()
 
 if __name__ == "__main__":
-    args = parse_args()
+    parse = parse_args()
+    args = parse.parse_args()
+    # Do not set Required =True, and print the complete help information without required parameters
+    if not args.url:
+        parse.print_help()
+        sys.exit()
     refresh(args.url,args.num)
     print('fresh done....')
