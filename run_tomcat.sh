@@ -5,13 +5,14 @@ usage="Usage:\n\tbash $0 -r/-s [idxdir]\n
       \n          \t -s\tstop tomcat
       \n          \t idxdir\tthe absolute path of directory for index.html"
 
+tomcatdir=/home/chenyl/tomcat
 if [ $# -eq 2 ];then
-   sed -i "s#docBase=\(".*"\) #docBase=\"$2\" #g" tomcat/conf/server.xml
+   sed -i "s#docBase=\(\".*\"\) #docBase=\"$2\" #g" $tomcatdir/conf/server.xml
    if [[ $1 == '-r' ]];then
-      bash /home/chenyl/tomcat/bin/startup.sh
+      bash $tomcatdir/bin/startup.sh
       echo -e "\ntomcat is runnig"
    elif [[ $1 == '-s' ]];then
-      bash /home/chenyl/tomcat/bin/shutdown.sh
+      bash $tomcatdir/bin/shutdown.sh
       echo -e "\ntomcat has been shut down"
    else
       echo -e $usage
@@ -19,10 +20,10 @@ if [ $# -eq 2 ];then
    fi
 elif [ $# -eq 1 ];then
    if [[ $1 == '-r' ]];then
-      bash /home/chenyl/tomcat/bin/startup.sh
+      bash $tomcatdir/bin/startup.sh
       echo -e "\ntomcat is runnig"
    elif [[ $1 == '-s' ]];then
-      bash /home/chenyl/tomcat/bin/shutdown.sh
+      bash $tomcatdir/bin/shutdown.sh
       echo -e "\ntomcat has been shut down"
    else
       echo -e $usage
