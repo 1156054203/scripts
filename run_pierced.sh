@@ -6,7 +6,6 @@ stfdir=/home/chenyl/software/pierced/linux
 if [ $# -eq 1 ];then
    port=$1
    $stfdir/ding -config=$stfdir/ding.cfg -subdomain=chenyulong $port:8080
-   exit 1
 elif [ $# -eq 0 ];then
    port=localhost
    $stfdir/ding -config=$stfdir/ding.cfg -subdomain=chenyulong $port:8080
