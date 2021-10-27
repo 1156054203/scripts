@@ -15,6 +15,9 @@ def refresh(url,num):
     driver = webdriver.Chrome("/mnt/c/software/chrome/chromedriver.exe")
     driver.get(url)
     for i in range(num):
+        print "\r",
+        print "refresh progress: {} time ......".format(i+1),
+        sys.stdout.flush()
         time.sleep(randint(30,90))
         driver.refresh()
     driver.close()
@@ -26,5 +29,6 @@ if __name__ == "__main__":
     if not args.url:
         parse.print_help()
         sys.exit()
+    print('\rstart time: [%s]' % time.strftime( "%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
     refresh(args.url,args.num)
-    print('fresh done....')
+    print('\nend time: [%s]' % time.strftime( "%Y-%m-%d %H:%M:%S", time.localtime(time.time())))
