@@ -1,5 +1,3 @@
-# help: 
-https://www.yuque.com/docs/share/5c170e2d-36aa-4819-825e-a0004b3346f1#
 
 {
   library(pheatmap)
@@ -264,21 +262,3 @@ markerFind <- function(seuratObj,test_method="MAST",min.pct=0.25,logFC=0.25) {
 	TIME_END(getwd(),time_log)
 	TIME_END("markerFind",time_log)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,13 +1,11 @@
-# help: https://www.yuque.com/docs/share/9a337c66-3db5-4edf-b6df-8432fc41bda5#
-
-source("/Data2/wanglp/bin/Seurat/Self/library/Intergrate_scRNA_scATAC_lib.R")
+source("library/Intergrate_scRNA_scATAC_lib.R")
 #----------------------------------------
 # Input
 #----------------------------------------
-outdir="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/signac_seurat/Peak/002_Activity_combined_scRNASeq"
-scATAC_rds="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/signac_seurat/Peak/001_ACTIVITY/scATAC.Activity.rds" # Activity
-scRNASeq_rds="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/combind/0.2/sampleCombined_allCellType.rds" #cluster 0-19
-markerFile="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/signac_seurat/Peak/ex2/marker_custom.csv"
+outdir="002_Activity_combined_scRNASeq"
+scATAC_rds="scATAC.Activity.rds" # Activity
+scRNASeq_rds="sampleCombined_allCellType.rds" #cluster 0-19
+markerFile="marker_custom.csv"
 
 
 

@@ -1,4 +1,3 @@
-# help: https://www.yuque.com/docs/share/4f19960e-d464-4890-ba88-d193f2260ab0#
 
 {
   library(dplyr)

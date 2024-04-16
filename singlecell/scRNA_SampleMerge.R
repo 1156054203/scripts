@@ -1,33 +1,13 @@
-#help: https://www.yuque.com/docs/share/2fd5c82e-4013-45bb-8938-1c818e1a0c9d#
-
-source("/Data2/wanglp/bin/Seurat/Self/library/scRNASeq_lib.R")
+source("library/scRNASeq_lib.R")
 #------------------------------------------------------------
 # 0.input
-#------------------------------------------------------------
-# source("/Data2/wanglp/bin/scRNASeq/Seurat/scRNA_library_wlp.R")
-# source("/rainbow2/jiangxc/software/scRNA-seq_tools/seurat/seurat_v3.R")
 config <- data.frame(testMethod='MAST',PCs=50,clusRes=0.2,species='mouse')#,sampleCounter=sampleNum)
 time_log=""
 #------------------------------------------------------------
-pathHome="/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/combind"
-sampleInfo="/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/sampleSheet2.csv"
-markerFile <- "/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/marker_list.csv"
-clusterfile="/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/cluster.txt"
-
-# exmple 2
-# pathHome="/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/2_CD45_plus/"
-# #sampleInfo="/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/sampleSheet2.csv"
-# sampleInfo="/Data2/wanglp/scRNASeq_bin/seurat/sampleSheet2.csv"
-# markerFile <- "/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/LAMCell.csv"
-# clusterfile="/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/CD45_plus_CellType.txt"
-
-# exmple 3
-# #------------------------------------------------------------
-# pathHome="/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/1_CD45_minus/"
-# sampleInfo="/Data2/wanglp/scRNASeq_bin/seurat/sampleSheet1.csv"
-# markerFile <- "/Data/wanglp/scRNASeq/bin/seurat/FatCell.csv"
-# clusterfile="/Data2/wanglp/scRNASeq/JYNJ1908CYH02_JYNJ1908CYH03_Xiaf_scRNAseq/Seurat/CD45_minus_CellType.txt"
-
+pathHome="combind"
+sampleInfo="sampleSheet2.csv"
+markerFile <- "marker_list.csv"
+clusterfile="cluster.txt"
 #------------------------------------------------------------
 # outdir
 Outdir(pathHome)

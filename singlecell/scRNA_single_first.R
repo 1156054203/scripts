@@ -1,16 +1,12 @@
-# https://www.yuque.com/docs/share/4af2f15f-418c-44c7-bc24-526a9afa1591#
-
-source("/Data2/wanglp/bin/Seurat/Self/library/scRNASeq_lib.R")
+source("library/scRNASeq_lib.R")
 #----------------------------------------------
 # 0.input
 #----------------------------------------------
 config <- data.frame(testMethod='MAST',PCs=50,clusRes=0.8,species='mouse')
 ##species: human(Hs), mouse(Mm), rat(Rn), chicken(Gg), pig(Ss), chimp(Pt), fly(Dm), worm(Ce), zebrafish(Dr)
-
-#source("/Data2/wanglp/bin/scRNASeq/Seurat/scRNA_library_wlp.R")
-pathHome="/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/single"
-sampleInfo="/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/sampleSheet2.csv"
-markerFile <- "/Data/wanglp/project/JYSH1903LHT27_Zhengyx_2scATAC_20190328/scRNASeq/seurat/marker_list.csv"
+pathHome="single"
+sampleInfo="sampleSheet2.csv"
+markerFile <- "marker_list.csv"
 
 #----------------------------------------------
 # 1.read data

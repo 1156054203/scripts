@@ -1,14 +1,12 @@
-#help: https://www.yuque.com/docs/share/e8b17963-83bc-4f10-a787-6f6d426fe41d#
-
-source("/Data2/wanglp/bin/Seurat/Self/library/scATACSeq_lib.R")
+source("library/scATAC_lib.R")
 #----------------------------------------
 # Input
 #----------------------------------------
 
-outdir="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/signac_seurat/Peak/"
-scATAC_h5="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/WE_WT/outs/filtered_peak_bc_matrix.h5"
-fragment_path="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/WE_WT/outs/fragments.tsv.gz"
-meta_file="/Data2/wanglp/scATACSeq/JYSH1903LHT27_Zhengyx_2scATAC_20190328/WE_WT/outs/singlecell.csv"
+outdir="signac_seurat"
+scATAC_h5="filtered_peak_bc_matrix.h5"
+fragment_path="fragments.tsv.gz"
+meta_file="singlecell.csv"
 sample_name_order=c("WE","WT")
 #G_VER=EnsDb.Hsapiens.v86
 G_VER=EnsDb.Mmusculus.v75  #V79b版本有问题, 该参数为包名，不能加引号,

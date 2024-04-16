@@ -1,15 +1,7 @@
-# help: https://www.yuque.com/docs/share/46b70be0-0444-4825-8488-e9ee7f35a593#
-
 # 软件安装
 ## if(!require('DESeq2')){  BiocManager::install('DESeq2',ask = F,update = F,  version = "3.8")  }
 
 options(bitmapType='cairo')
-## install UMAP by python
-# if(!require('reticulate')){  BiocManager::install('reticulate',ask = F,update = F)  }; library(reticulate)
-# reticulate::py_config()
-# use_python("/rainbow/software/anaconda3/bin/python3.6")
-# use_virtualenv("~/myenv")
-# reticulate::py_install(packages = 'umap-learn')
 ## seurat
 
 {
@@ -154,24 +146,3 @@ RENAME_CELL_TYPE  <- function(seuratObj,pathHome=pathHome,clusterfile=clusterfil
 	TSNE_UMAP_PLOT(seuratObj,outdir,group="CellType")
 	return(seuratObj)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
